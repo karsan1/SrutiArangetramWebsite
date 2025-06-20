@@ -260,19 +260,24 @@
             <div style="display: flex; gap: 1em;">
               <div style="flex: 1;">
                 <label for="firstName">First name *</label>
-                <input type="text" id="firstName" name="firstName" placeholder="First Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+                <div style="display: flex; justify-content: center;">
+                  <input type="text" id="firstName" name="firstName" placeholder="First Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+                </div>
               </div>
 
               <div style="flex: 1;">
                 <label for="lastName">Last name *</label>
-                <input type="text" id="lastName" name="lastName" placeholder="Last Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+                <div style="display: flex; justify-content: center;">
+                  <input type="text" id="lastName" name="lastName" placeholder="Last Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+                </div>
               </div>
             </div>
 
             <label for="guests" style="display: block; margin-top: 1.5em; font-weight: bold; font-size: 1.1em;">No of Guests</label>
-            <input type="text" id="guests" name="guests" placeholder="Guest response" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            <div style="display: flex; justify-content: center;">
+              <input type="text" id="guests" name="guests" placeholder="Guest response" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
 
-            <button type="button" style="margin-top: 1em; border: 1px solid #ccc; background: white; padding: 0.5em 1em; border-radius: 999px; cursor: pointer;">+ Add Guest</button>
 
             <hr style="margin: 2em 0;">
 
@@ -280,21 +285,35 @@
             <p>Enter an email address for us to send a confirmation email to.</p>
 
             <label for="email">Email Address *</label>
-            <input type="email" id="email" name="email" placeholder="Your email address" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            <div style="display: flex; justify-content: center;">
+              <input type="email" id="email" name="email" placeholder="Your email address" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+          <label for="messageYes">Your Message</label>
+          <div style="display: flex; justify-content: center;">
+            <input type="text" id="messageYes" name="messageYes" placeholder="Optional" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+          </div>
           </div>
 
           <div id="noFields" hidden>
             <label for="firstNameNo">First name *</label>
-            <input type="text" id="firstNameNo" name="firstNameNo" placeholder="First Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            <div style="display: flex; justify-content: center;">
+              <input type="text" id="firstNameNo" name="firstNameNo" placeholder="First Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
 
             <label for="lastNameNo">Last name *</label>
-            <input type="text" id="lastNameNo" name="lastNameNo" placeholder="Last Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            <div style="display: flex; justify-content: center;">
+              <input type="text" id="lastNameNo" name="lastNameNo" placeholder="Last Name" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
 
             <label for="emailNo">Email Address *</label>
-            <input type="email" id="emailNo" name="emailNo" placeholder="Your email address" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            <div style="display: flex; justify-content: center;">
+              <input type="email" id="emailNo" name="emailNo" placeholder="Your email address" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
 
             <label for="message">Your Message</label>
-            <input type="text" id="message" name="message" placeholder="Optional" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            <div style="display: flex; justify-content: center;">
+              <input type="text" id="message" name="message" placeholder="Optional" style="width: 100%; padding: 0.75em; font-size: 1em; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
           </div>
 
           <button type="submit" style="margin-top: 2em; background-color: #8fd5f5; color: #fff; border: none; font-size: 1em; font-weight: bold; padding: 0.75em 1.5em; border-radius: 5px; width: 100%; cursor: pointer;">SAVE RSVP</button>
@@ -361,6 +380,15 @@ function submitRSVP(event) {
   event.preventDefault();
 
   const isYes = document.getElementById('yesFields').hidden === false;
+  const emailInput = isYes ? document.getElementById("email") : document.getElementById("emailNo");
+  const email = emailInput.value.trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(email)) {
+    alert("Please enter a valid email address.");
+    emailInput.focus();
+    return;
+  }
 
   const data = isYes ? {
     firstName: document.getElementById("firstName").value,
@@ -368,7 +396,7 @@ function submitRSVP(event) {
     email: document.getElementById("email").value,
     guests: document.getElementById("guests").value,
     attending: "yes",
-    message: ""
+    message: document.getElementById("messageYes").value || ""
   } : {
     firstName: document.getElementById("firstNameNo").value,
     lastName: document.getElementById("lastNameNo").value,
