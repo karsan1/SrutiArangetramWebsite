@@ -282,7 +282,6 @@ function showGuestFields(value) {
   if (value === 'yes') {
     yesFields.hidden = false;
     noFields.hidden = true;
-
     yesBtn.style.backgroundColor = '#26b3f2';
     yesBtn.style.color = 'white';
     noBtn.style.backgroundColor = 'white';
@@ -290,7 +289,6 @@ function showGuestFields(value) {
   } else {
     noFields.hidden = false;
     yesFields.hidden = true;
-
     noBtn.style.backgroundColor = '#26b3f2';
     noBtn.style.color = 'white';
     yesBtn.style.backgroundColor = 'white';
@@ -298,10 +296,9 @@ function showGuestFields(value) {
   }
 }
 
-const form = document.getElementById('guestDetails');
-form.addEventListener('submit', function(event) {
+function submitRSVP(event) {
   event.preventDefault();
-  const confirmation = document.getElementById('rsvp-confirmation');
+
   const isYes = document.getElementById('yesFields').hidden === false;
 
   const data = isYes ? {
@@ -326,12 +323,15 @@ form.addEventListener('submit', function(event) {
   iframe.src = `https://script.google.com/macros/s/AKfycbxE-ZPfNF-r2f7lfoPYyeRadbOkqqGi5wJVgJexlI-I12ndFQY6zigCaZy3jU9YwDhjSw/exec?${qs}`;
   document.body.appendChild(iframe);
 
-  confirmation.style.display = 'block';
-  form.reset();
-  document.getElementById('yesFields').hidden = true;
-  document.getElementById('noFields').hidden = true;
-});
+  alert("Thank you! Your RSVP has been submitted.");
+
+  document.getElementById("guestDetails").reset();
+  document.getElementById("guestDetails").style.display = "none";
+  document.getElementById("yesFields").hidden = true;
+  document.getElementById("noFields").hidden = true;
+}
 </script>
+
 
     
     
