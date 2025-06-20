@@ -159,6 +159,13 @@
       margin-bottom: 0.5em;
     }
 @media (max-width: 768px) {
+  header {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: top center;
+    height: auto;
+    padding-top: 56.25%; /* maintain 16:9 ratio */
+  }
   .info-section {
     flex-direction: column;
     gap: 1.5em;
