@@ -192,7 +192,7 @@
       <button type="button" id="noBtn" onclick="showGuestFields('no')">NO</button>
     </div>
 
-    <form id="guestDetails" style="display: none;">
+    <form id="guestDetails" novalidate>
       <div id="yesFields" hidden>
         <input type="hidden" name="attending" value="yes">
 
@@ -201,12 +201,12 @@
         <div style="display: flex; gap: 1em;">
           <div style="flex: 1;">
             <label for="firstName">First name *</label>
-            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+            <input type="text" id="firstName" name="firstName" placeholder="First Name">
           </div>
 
           <div style="flex: 1;">
             <label for="lastName">Last name *</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name">
           </div>
         </div>
 
@@ -214,7 +214,7 @@
         <input type="text" id="guests" name="guests" placeholder="Guest response">
 
         <label for="email">Email Address *</label>
-        <input type="email" id="email" name="email" placeholder="Your email address" required>
+        <input type="email" id="email" name="email" placeholder="Your email address">
       </div>
 
       <div id="noFields" hidden>
@@ -277,20 +277,16 @@ function showGuestFields(value) {
   guestForm.style.display = 'block';
 
   if (value === 'yes') {
-    yesFields.removeAttribute('hidden');
-    noFields.setAttribute('hidden', true);
-    yesFields.querySelectorAll('input').forEach(i => i.required = true);
-    noFields.querySelectorAll('input').forEach(i => i.required = false);
+    yesFields.hidden = false;
+    noFields.hidden = true;
 
     yesBtn.style.backgroundColor = '#26b3f2';
     yesBtn.style.color = 'white';
     noBtn.style.backgroundColor = 'white';
     noBtn.style.color = '#26b3f2';
   } else {
-    noFields.removeAttribute('hidden');
-    yesFields.setAttribute('hidden', true);
-    noFields.querySelectorAll('input').forEach(i => i.required = true);
-    yesFields.querySelectorAll('input').forEach(i => i.required = false);
+    noFields.hidden = false;
+    yesFields.hidden = true;
 
     noBtn.style.backgroundColor = '#26b3f2';
     noBtn.style.color = 'white';
@@ -329,11 +325,10 @@ form.addEventListener('submit', function(event) {
 
   confirmation.style.display = 'block';
   form.reset();
-  document.getElementById('yesFields').setAttribute('hidden', true);
-  document.getElementById('noFields').setAttribute('hidden', true);
+  document.getElementById('yesFields').hidden = true;
+  document.getElementById('noFields').hidden = true;
 });
 </script>
-
 
     
     
